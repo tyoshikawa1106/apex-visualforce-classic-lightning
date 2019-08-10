@@ -1,0 +1,42 @@
+<apex:page >
+    <script type="text/javascript">
+        "use strict";
+        
+        var app = angular.module("Controllers", ["Services"]);
+        var recordId = '';
+    
+        // VisualforceLightningAppController
+        app.controller("VisualforceLightningAppController", ["$scope", "$sce", "$routeParams", "VisualforceLightningAppServices", function($scope, $sce, $routeParams, services) {
+
+            // ロック解除
+            $scope.isLocked = false;
+            // 初期処理
+            services.init($scope);
+
+            // 検索
+            $scope.search = function(event) {
+                event.preventDefault();
+                // ロック
+                $scope.isLocked = true;
+                // メッセージクリア
+                clearMessage();
+                // 検索処理
+                services.search($scope);
+            };
+
+            // クリア
+            $scope.clear = function(event) {
+                event.preventDefault();
+                // メッセージクリア
+                clearMessage();
+                // クリア処理
+                services.init($scope);
+            };
+
+            // メッセージ初期化
+            function clearMessage() {
+                $scope.errorMessage = '';
+            };
+        }]);
+    </script>
+</apex:page>
